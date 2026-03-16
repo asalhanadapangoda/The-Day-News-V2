@@ -1,0 +1,31 @@
+Project Structure:
++--- client
+|   +--- .env
+|   +--- .gitignore
+|   +--- eslint.config.js
+|   +--- index.html
+|   +--- package-lock.json
+|   +--- package.json
+|   +--- public
+|   |   \--- vite.svg
+|   +--- README.md
+|   +--- src
+|   |   +--- App.jsx
+|   |   +--- assets
+|   |   |   \--- react.svg
+|   |   +--- index.css
+|   |   \--- main.jsx
+|   \--- vite.config.js
++--- project_structure.txt
++--- README.md
+\--- server
+    +--- .env
+    +--- config
+    +--- controllers
+    +--- middleware
+    +--- models
+    +--- package-lock.json
+    +--- package.json
+    +--- routes
+    +--- server.js
+    \--- utils
