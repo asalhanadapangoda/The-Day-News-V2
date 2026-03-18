@@ -57,6 +57,8 @@ const articleSchema = new mongoose.Schema(
   }
 );
 
+articleSchema.index({ category: 1, status: 1, publishDate: -1 });
+
 const Article = mongoose.model('Article', articleSchema);
 
 export default Article;

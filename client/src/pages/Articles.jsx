@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import api from '../services/api';
 import { format } from 'date-fns';
+import Skeleton from '../components/Skeleton';
 
 const Articles = () => {
   const [articles, setArticles] = useState([]);
@@ -42,7 +43,7 @@ const Articles = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 py-12 min-h-screen">
       <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold text-white mb-4 text-glow">Latest Articles</h1>
+        <h1 className="text-4xl font-bold text-white mb-4 text-glow transition-all duration-300">Latest Articles</h1>
         <p className="text-gray-400 max-w-2xl mx-auto">
           In-depth analysis, breaking news, and featured stories from our global correspondents.
         </p>
@@ -76,8 +77,10 @@ const Articles = () => {
       </div>
 
       {loading ? (
-        <div className="flex justify-center items-center py-20">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {[...Array(8)].map((_, i) => (
+            <Skeleton key={i} type="article" />
+          ))}
         </div>
       ) : articles.length === 0 ? (
         <div className="text-center py-20 text-gray-500 bg-white/5 rounded-xl border border-white/10">
@@ -88,7 +91,7 @@ const Articles = () => {
           {articles.map((article) => (
             <Link key={article._id} to={`/articles/${article.slug}`} className="group glass-card overflow-hidden block flex flex-col h-full hover-glow">
               <div className="relative h-48 overflow-hidden">
-                <img src={article.featuredImage} alt={article.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                <img src={article.featuredImage} alt={article.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
                 {article.category && (
                   <div className="absolute top-3 left-3 bg-primary/90 backdrop-blur text-white text-[10px] font-bold uppercase px-2 py-1 rounded">
                     {article.category.name}

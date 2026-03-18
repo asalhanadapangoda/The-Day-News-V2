@@ -47,6 +47,8 @@ const episodeSchema = new mongoose.Schema(
   }
 );
 
+episodeSchema.index({ program: 1, status: 1, publishDate: -1 });
+
 const Episode = mongoose.model('Episode', episodeSchema);
 
 export default Episode;

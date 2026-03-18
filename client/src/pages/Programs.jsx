@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../services/api';
 import { PlayCircle } from 'lucide-react';
+import Skeleton from '../components/Skeleton';
 
 const Programs = () => {
   const [programs, setPrograms] = useState([]);
@@ -23,8 +24,16 @@ const Programs = () => {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-[60vh]">
-        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-primary"></div>
+      <div className="max-w-7xl mx-auto px-4 py-12 min-h-screen">
+        <div className="text-center mb-16 opacity-50">
+          <div className="h-10 bg-white/10 rounded-lg w-64 mx-auto mb-4 animate-pulse"></div>
+          <div className="h-4 bg-white/5 rounded-lg w-96 mx-auto animate-pulse"></div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {[...Array(6)].map((_, i) => (
+            <Skeleton key={i} type="program" />
+          ))}
+        </div>
       </div>
     );
   }
@@ -50,6 +59,7 @@ const Programs = () => {
               src={program.coverImage} 
               alt={program.title} 
               className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
+              loading="lazy"
             />
             
             {/* Overlays */}

@@ -4,6 +4,7 @@ import api from '../services/api';
 import { PlayCircle, ArrowRight, Calendar, Clock } from 'lucide-react';
 import { format } from 'date-fns';
 import AIChatBot from '../components/AIChatBot';
+import Skeleton from '../components/Skeleton';
 
 const Home = () => {
   const [loading, setLoading] = useState(true);
@@ -85,8 +86,49 @@ const Home = () => {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-screen">
-        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-primary"></div>
+      <div className="w-full">
+        {/* Hero Skeleton */}
+        <div className="h-[80vh] min-h-[600px] w-full bg-white/5 animate-pulse relative">
+           <div className="absolute inset-0 bg-gradient-to-t from-[#0c0014] to-transparent"></div>
+           <div className="absolute bottom-16 left-8 md:bottom-24 md:left-16 space-y-6 w-full max-w-2xl px-4">
+              <div className="h-12 md:h-16 bg-white/10 rounded w-full md:w-3/4"></div>
+              <div className="h-6 bg-white/5 rounded w-1/2"></div>
+              <div className="h-14 bg-white/10 rounded-full w-40"></div>
+           </div>
+        </div>
+        
+        {/* Grid Skeletons */}
+        <div className="max-w-7xl mx-auto px-4 py-16 space-y-24">
+           {/* Ads Skeleton */}
+           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+              <div className="h-40 bg-white/5 rounded-xl animate-pulse"></div>
+              <div className="h-40 bg-white/5 rounded-xl animate-pulse"></div>
+           </div>
+
+           {/* Episodes Skeleton */}
+           <div>
+              <div className="h-10 bg-white/10 rounded w-48 mb-8 animate-pulse"></div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {[...Array(3)].map((_, i) => <Skeleton key={i} type="episode" />)}
+              </div>
+           </div>
+           
+           {/* Articles Skeleton */}
+           <div>
+              <div className="h-10 bg-white/10 rounded w-64 mb-10 animate-pulse"></div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {[...Array(4)].map((_, i) => <Skeleton key={i} type="article" />)}
+              </div>
+           </div>
+
+           {/* Posters Skeleton */}
+           <div>
+              <div className="h-10 bg-white/10 rounded w-48 mb-10 animate-pulse"></div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                {[...Array(4)].map((_, i) => <Skeleton key={i} type="poster" />)}
+              </div>
+           </div>
+        </div>
       </div>
     );
   }
@@ -180,7 +222,7 @@ const Home = () => {
             {homeTopAds.slice(0, 2).map((ad) => (
               <a key={ad._id} href={ad.linkUrl || '#'} target="_blank" rel="noopener noreferrer" className="block w-full group">
                 <div className="relative overflow-hidden rounded-xl border border-white/5 bg-black/20 backdrop-blur-sm shadow-2xl transition-all group-hover:border-primary/30">
-                  <img src={ad.imageUrl} alt={ad.title} className="w-full h-auto object-contain" />
+                  <img src={ad.imageUrl} alt={ad.title} className="w-full h-auto object-contain" loading="lazy" />
                   <div className="absolute top-2 right-2 px-2 py-0.5 bg-black/60 backdrop-blur-md rounded text-[8px] text-primary/80 uppercase tracking-widest border border-white/10">
                     Sponsored
                   </div>
@@ -207,7 +249,7 @@ const Home = () => {
           {data.recentEpisodes.map(episode => (
             <Link key={episode._id} to={`/programs/${episode.program?.slug}`} className="group glass-card overflow-hidden block">
               <div className="relative aspect-video overflow-hidden">
-                <img src={episode.thumbnailImage} alt={episode.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                <img src={episode.thumbnailImage} alt={episode.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
                 <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors flex items-center justify-center">
                   <PlayCircle size={48} className="text-white/80 group-hover:text-white transform group-hover:scale-110 transition-all drop-shadow-lg" />
                 </div>
@@ -244,7 +286,7 @@ const Home = () => {
             {data.recentArticles.map(article => (
               <Link key={article._id} to={`/articles/${article.slug}`} className="group bg-[#1a1a1a] rounded-xl overflow-hidden shadow-lg border border-white/5 hover:border-primary/50 transition-colors flex flex-col h-full">
                 <div className="relative h-48 overflow-hidden">
-                  <img src={article.featuredImage} alt={article.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <img src={article.featuredImage} alt={article.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
                   {article.category && (
                     <div className="absolute top-3 left-3 bg-primary/90 text-white text-[10px] font-bold uppercase px-2 py-1 rounded">
                       {article.category.name}
@@ -289,6 +331,7 @@ const Home = () => {
                     src={prog.posterImage}
                     alt={prog.title}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity"></div>
                   <div className="absolute bottom-0 left-0 right-0 p-6">
@@ -318,7 +361,7 @@ const Home = () => {
             {homeMiddleAds.slice(0, 2).map((ad) => (
               <a key={ad._id} href={ad.linkUrl || '#'} target="_blank" rel="noopener noreferrer" className="block w-full group">
                 <div className="h-40 md:h-48 rounded-2xl overflow-hidden shadow-2xl border border-white/5 bg-black/20 backdrop-blur-sm relative group-hover:border-primary/30 transition-all">
-                  <img src={ad.imageUrl} alt={ad.title} className="w-full h-full object-cover" />
+                  <img src={ad.imageUrl} alt={ad.title} className="w-full h-full object-cover" loading="lazy" />
                   <div className="absolute top-3 right-3 px-2 py-0.5 bg-black/60 backdrop-blur-md rounded text-[8px] text-primary/80 uppercase tracking-widest border border-white/10">
                     Sponsored
                   </div>
@@ -363,11 +406,12 @@ const Home = () => {
                     <div key={episode._id} className="bg-[#111111] rounded-2xl overflow-hidden border border-white/5 hover:border-primary/30 transition-all shadow-lg flex flex-col group">
                       {/* Thumbnail */}
                       <div className="relative aspect-video overflow-hidden">
-                        <img
-                          src={episode.thumbnailImage}
-                          alt={episode.title}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        />
+                          <img
+                            src={episode.thumbnailImage}
+                            alt={episode.title}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                            loading="lazy"
+                          />
                         {episode.episodeNumber && (
                           <div className="absolute top-3 left-3 bg-primary text-white text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-full shadow">
                             EPISODE {episode.episodeNumber}

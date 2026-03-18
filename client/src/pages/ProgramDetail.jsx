@@ -101,7 +101,7 @@ const ProgramDetail = () => {
                 className="bg-[#1a1a1a] border border-white/5 rounded-2xl overflow-hidden hover:border-primary/50 transition-all cursor-pointer group flex flex-col h-full shadow-lg"
               >
                 <div className="relative aspect-video overflow-hidden">
-                  <img src={episode.thumbnailImage} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt={episode.title} />
+                  <img src={episode.thumbnailImage} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt={episode.title} loading="lazy" />
                   <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 flex items-center justify-center transition-colors">
                     <PlayCircle size={48} className="text-white drop-shadow-lg group-hover:scale-110 transition-transform" />
                   </div>
