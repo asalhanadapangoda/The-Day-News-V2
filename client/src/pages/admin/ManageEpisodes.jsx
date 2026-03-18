@@ -11,13 +11,13 @@ const ManageEpisodes = () => {
   const [editingId, setEditingId] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isUploading, setIsUploading] = useState(false);
-  
+
   // Filters
   const [filterProgram, setFilterProgram] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
 
   const { register, handleSubmit, reset, setValue, watch, formState: { errors } } = useForm();
-  
+
   const thumbnailImageUrl = watch('thumbnailImage');
 
   const fetchData = async () => {
@@ -41,27 +41,23 @@ const ManageEpisodes = () => {
 
   const openAddModal = () => {
     setEditingId(null);
-    reset({ 
-      title: '', 
-      description: '', 
-      thumbnailImage: '', 
-      videoUrl: '', 
-      duration: '',
-      episodeNumber: '',
-      program: filterProgram || (programs.length > 0 ? programs[0]._id : '') 
+    reset({
+      title: '',
+      description: '',
+      thumbnailImage: '',
+      videoUrl: '',
+      program: filterProgram || (programs.length > 0 ? programs[0]._id : '')
     });
     setIsModalOpen(true);
   };
 
   const openEditModal = (ep) => {
     setEditingId(ep._id);
-    reset({ 
-      title: ep.title, 
-      description: ep.description, 
-      thumbnailImage: ep.thumbnailImage, 
+    reset({
+      title: ep.title,
+      description: ep.description,
+      thumbnailImage: ep.thumbnailImage,
       videoUrl: ep.videoUrl,
-      duration: ep.duration,
-      episodeNumber: ep.episodeNumber || '',
       program: ep.program?._id || ''
     });
     setIsModalOpen(true);
@@ -141,8 +137,8 @@ const ManageEpisodes = () => {
       {/* Toolbar */}
       <div className="bg-[#121212] border border-white/5 rounded-xl p-4 mb-6 flex flex-col md:flex-row gap-4 justify-between h-auto">
         <div className="flex flex-col md:flex-row gap-4 w-full md:w-auto">
-          <select 
-            value={filterProgram} 
+          <select
+            value={filterProgram}
             onChange={(e) => setFilterProgram(e.target.value)}
             className="bg-[#1a1a1a] border border-white/10 text-white text-sm rounded-lg px-4 py-2 focus:outline-none focus:border-primary [&>option]:bg-[#1a1a1a]"
           >
@@ -152,9 +148,9 @@ const ManageEpisodes = () => {
             ))}
           </select>
         </div>
-        
+
         <div className="relative w-full md:w-64">
-          <input 
+          <input
             type="text"
             placeholder="Search episodes..."
             value={searchQuery}
@@ -170,9 +166,6 @@ const ManageEpisodes = () => {
           <div key={ep._id} className="bg-[#121212] border border-white/5 rounded-xl overflow-hidden hover:border-white/10 transition-colors flex flex-col">
             <div className="h-40 relative">
               <img src={ep.thumbnailImage} className="w-full h-full object-cover" />
-              <div className="absolute bottom-2 right-2 bg-black/80 px-2 py-1 rounded text-xs text-white font-mono">
-                {ep.duration}
-              </div>
               <div className="absolute top-2 left-2 bg-primary/90 text-[10px] font-bold uppercase px-2 py-1 rounded text-white truncate max-w-[80%]">
                 {ep.program?.title || 'Unknown'}
               </div>
@@ -183,7 +176,7 @@ const ManageEpisodes = () => {
               <div className="text-xs text-gray-500 mb-4 font-mono">
                 {format(new Date(ep.publishDate), 'MMM dd, yyyy HH:mm')}
               </div>
-              
+
               <div className="flex justify-end gap-2 mt-auto pt-4 border-t border-white/5">
                 <button onClick={() => openEditModal(ep)} className="text-primary hover:text-white p-2 bg-primary/10 rounded-lg transition-colors">
                   <Pencil size={18} />
@@ -211,12 +204,12 @@ const ManageEpisodes = () => {
               <h2 className="text-xl font-bold text-white">{editingId ? 'Edit Episode' : 'New Episode'}</h2>
               <button onClick={closeModal} className="text-gray-400 hover:text-white transition-colors"><X size={24} /></button>
             </div>
-            
+
             <form onSubmit={handleSubmit(onSubmit)} className="p-6 overflow-y-auto flex-grow space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="md:col-span-2">
                   <label className="block text-sm font-medium text-gray-400 mb-2">Episode Title *</label>
-                  <input 
+                  <input
                     {...register("title", { required: "Title is required" })}
                     className="w-full bg-white/5 border border-white/10 text-white rounded-lg px-4 py-3 focus:border-primary focus:outline-none"
                   />
@@ -225,7 +218,7 @@ const ManageEpisodes = () => {
 
                 <div>
                   <label className="block text-sm font-medium text-gray-400 mb-2">Belongs to Program *</label>
-                  <select 
+                  <select
                     {...register("program", { required: "Program is required" })}
                     className="w-full bg-white/5 border border-white/10 text-white rounded-lg px-4 py-3 focus:border-primary focus:outline-none [&>option]:bg-[#1a1a1a]"
                   >
@@ -235,28 +228,9 @@ const ManageEpisodes = () => {
                   {errors.program && <p className="text-red-400 text-xs mt-1">{errors.program.message}</p>}
                 </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-400 mb-2">Duration (e.g. 45:00)</label>
-                  <input 
-                    {...register("duration")}
-                    placeholder="00:00"
-                    className="w-full bg-white/5 border border-white/10 text-white rounded-lg px-4 py-3 focus:border-primary focus:outline-none"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-gray-400 mb-2">Episode Number</label>
-                  <input 
-                    type="number"
-                    {...register("episodeNumber", { valueAsNumber: true })}
-                    placeholder="e.g. 10"
-                    className="w-full bg-white/5 border border-white/10 text-white rounded-lg px-4 py-3 focus:border-primary focus:outline-none"
-                  />
-                </div>
-
                 <div className="md:col-span-2">
                   <label className="block text-sm font-medium text-gray-400 mb-2">Description</label>
-                  <textarea 
+                  <textarea
                     {...register("description")}
                     className="w-full bg-white/5 border border-white/10 text-white rounded-lg px-4 py-3 focus:border-primary focus:outline-none resize-none"
                     rows="3"
@@ -265,7 +239,7 @@ const ManageEpisodes = () => {
 
                 <div className="md:col-span-2">
                   <label className="block text-sm font-medium text-gray-400 mb-2">Video Embed URL (YouTube/MP4) *</label>
-                  <input 
+                  <input
                     {...register("videoUrl", { required: "Video URL is required" })}
                     className="w-full bg-white/5 border border-white/10 text-white rounded-lg px-4 py-3 focus:border-primary focus:outline-none"
                     placeholder="https://youtube.com/watch?v=..."
@@ -276,7 +250,7 @@ const ManageEpisodes = () => {
                 <div className="md:col-span-2">
                   <label className="block text-sm font-medium text-gray-400 mb-2">Thumbnail/Cover Image URL *</label>
                   <div className="flex gap-4">
-                    <input 
+                    <input
                       {...register("thumbnailImage", { required: "Image is required" })}
                       className="flex-1 bg-white/5 border border-white/10 text-white rounded-lg px-4 py-3 focus:border-primary focus:outline-none"
                       placeholder="https://..."

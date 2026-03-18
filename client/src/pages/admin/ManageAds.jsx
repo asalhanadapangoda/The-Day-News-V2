@@ -11,7 +11,7 @@ const ManageAds = () => {
   const [isUploading, setIsUploading] = useState(false);
 
   const { register, handleSubmit, reset, setValue, watch, formState: { errors } } = useForm();
-  
+
   const imageUrl = watch('imageUrl');
 
   const fetchAds = async () => {
@@ -37,10 +37,10 @@ const ManageAds = () => {
 
   const openEditModal = (ad) => {
     setEditingId(ad._id);
-    reset({ 
-      title: ad.title, 
-      imageUrl: ad.imageUrl, 
-      linkUrl: ad.linkUrl, 
+    reset({
+      title: ad.title,
+      imageUrl: ad.imageUrl,
+      linkUrl: ad.linkUrl,
       placement: ad.placement,
       isActive: ad.isActive
     });
@@ -122,7 +122,7 @@ const ManageAds = () => {
               </div>
               <span className="bg-white/10 px-2 py-1 rounded text-xs text-gray-300 font-mono">{ad.placement.replace('_', ' ').toUpperCase()}</span>
             </div>
-            
+
             <div className="p-4 flex-grow bg-black/20 flex items-center justify-center relative group min-h-[150px]">
               <img src={ad.imageUrl} alt={ad.title} className="max-h-32 object-contain" />
               <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center p-4 text-center">
@@ -131,7 +131,7 @@ const ManageAds = () => {
                 </a>
               </div>
             </div>
-            
+
             <div className="p-4 border-t border-white/5 flex flex-wrap justify-between items-center gap-4">
               <div className="text-gray-400 text-sm">
                 Status: <span className={ad.isActive ? 'text-green-400' : 'text-red-400'}>{ad.isActive ? 'Active' : 'Draft/Disabled'}</span>
@@ -163,12 +163,12 @@ const ManageAds = () => {
               <h2 className="text-xl font-bold text-white">{editingId ? 'Edit Banner' : 'New Banner'}</h2>
               <button onClick={closeModal} className="text-gray-400 hover:text-white transition-colors"><X size={24} /></button>
             </div>
-            
+
             <form onSubmit={handleSubmit(onSubmit)} className="p-6 overflow-y-auto space-y-6">
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-400 mb-2">Internal Title/Name *</label>
-                <input 
+                <input
                   {...register("title", { required: "Title is required" })}
                   className="w-full bg-white/5 border border-white/10 text-white rounded-lg px-4 py-3 focus:border-primary focus:outline-none"
                 />
@@ -177,7 +177,7 @@ const ManageAds = () => {
 
               <div>
                 <label className="block text-sm font-medium text-gray-400 mb-2">Placement Zone *</label>
-                <select 
+                <select
                   {...register("placement", { required: "Placement is required" })}
                   className="w-full bg-white/5 border border-white/10 text-white rounded-lg px-4 py-3 focus:border-primary focus:outline-none [&>option]:bg-[#1a1a1a] [&>option]:text-white"
                 >
@@ -188,7 +188,7 @@ const ManageAds = () => {
 
               <div>
                 <label className="block text-sm font-medium text-gray-400 mb-2">Target Link URL *</label>
-                <input 
+                <input
                   {...register("linkUrl", { required: "Link is required" })}
                   className="w-full bg-white/5 border border-white/10 text-white rounded-lg px-4 py-3 focus:border-primary focus:outline-none"
                   placeholder="https://..."
@@ -199,7 +199,7 @@ const ManageAds = () => {
               <div>
                 <label className="block text-sm font-medium text-gray-400 mb-2">Banner Image URL *</label>
                 <div className="flex gap-4">
-                  <input 
+                  <input
                     {...register("imageUrl", { required: "Image is required" })}
                     className="flex-1 bg-white/5 border border-white/10 text-white rounded-lg px-4 py-3 focus:border-primary focus:outline-none"
                     placeholder="https://..."

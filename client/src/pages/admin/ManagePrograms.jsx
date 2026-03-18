@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import api from '../../services/api';
 import { Pencil, Trash2, Plus, X, UploadCloud, Star } from 'lucide-react';
-import axios from 'axios';
 
 const ManagePrograms = () => {
   const [programs, setPrograms] = useState([]);
@@ -12,10 +11,8 @@ const ManagePrograms = () => {
   const [isUploading, setIsUploading] = useState(false);
 
   const { register, handleSubmit, reset, setValue, watch, formState: { errors } } = useForm();
-  
-  // Watch image URLs to render previews
+
   const coverImageUrl = watch('coverImage');
-  const logoImageUrl = watch('logoImage');
   const posterImageUrl = watch('posterImage');
 
   const fetchPrograms = async () => {
@@ -23,7 +20,7 @@ const ManagePrograms = () => {
       const { data } = await api.get('/programs');
       setPrograms(data);
     } catch (error) {
-      alert("Error fetching programs");
+      alert('Error fetching programs');
     } finally {
       setLoading(false);
     }
@@ -35,19 +32,18 @@ const ManagePrograms = () => {
 
   const openAddModal = () => {
     setEditingId(null);
-    reset({ title: '', description: '', coverImage: '', logoImage: '', posterImage: '', isFeatured: false });
+    reset({ title: '', description: '', coverImage: '', posterImage: '', isFeatured: false });
     setIsModalOpen(true);
   };
 
   const openEditModal = (prog) => {
     setEditingId(prog._id);
-    reset({ 
-      title: prog.title, 
-      description: prog.description, 
-      coverImage: prog.coverImage, 
-      logoImage: prog.logoImage || '',
+    reset({
+      title: prog.title,
+      description: prog.description,
+      coverImage: prog.coverImage,
       posterImage: prog.posterImage || '',
-      isFeatured: prog.isFeatured
+      isFeatured: prog.isFeatured,
     });
     setIsModalOpen(true);
   };
@@ -69,8 +65,8 @@ const ManagePrograms = () => {
     try {
       const { data } = await api.post('/upload', formData, {
         headers: {
-          'Content-Type': 'multipart/form-data'
-        }
+          'Content-Type': 'multipart/form-data',
+        },
       });
       setValue(field, data.url);
     } catch (error) {
@@ -95,7 +91,7 @@ const ManagePrograms = () => {
   };
 
   const handleDelete = async (id) => {
-    if (window.confirm("Delete this program? This does NOT delete its episodes automatically.")) {
+    if (window.confirm('Delete this program? This does NOT delete its episodes automatically.')) {
       try {
         await api.delete(`/programs/${id}`);
         fetchPrograms();
@@ -120,7 +116,7 @@ const ManagePrograms = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {programs.map(prog => (
+        {programs.map((prog) => (
           <div key={prog._id} className="bg-[#121212] border border-white/5 rounded-xl overflow-hidden hover:border-white/10 transition-colors flex flex-col relative">
             {prog.isFeatured && (
               <div className="absolute top-2 left-2 z-10 bg-yellow-500 text-black text-[10px] uppercase font-bold px-2 py-1 rounded flex items-center gap-1 shadow-lg">
@@ -129,11 +125,6 @@ const ManagePrograms = () => {
             )}
             <div className="h-40 relative">
               <img src={prog.coverImage} alt={prog.title} className="w-full h-full object-cover" />
-              {prog.logoImage && (
-                <div className="absolute bottom-2 left-2 w-12 h-12 bg-black/50 backdrop-blur rounded p-1 border border-white/20">
-                  <img src={prog.logoImage} className="w-full h-full object-contain" />
-                </div>
-              )}
             </div>
             <div className="p-5 flex flex-col flex-grow">
               <h3 className="text-xl font-bold text-white mb-2">{prog.title}</h3>
@@ -157,7 +148,6 @@ const ManagePrograms = () => {
         </div>
       )}
 
-      {/* Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex justify-center items-center p-4">
           <div className="bg-[#1a1a1a] border border-white/10 w-full max-w-2xl rounded-2xl shadow-2xl relative overflow-hidden flex flex-col max-h-[90vh]">
@@ -165,13 +155,13 @@ const ManagePrograms = () => {
               <h2 className="text-xl font-bold text-white">{editingId ? 'Edit Program' : 'New Program'}</h2>
               <button onClick={closeModal} className="text-gray-400 hover:text-white transition-colors"><X size={24} /></button>
             </div>
-            
+
             <form onSubmit={handleSubmit(onSubmit)} className="p-6 overflow-y-auto flex-grow space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="md:col-span-2">
                   <label className="block text-sm font-medium text-gray-400 mb-2">Program Title *</label>
-                  <input 
-                    {...register("title", { required: "Title is required" })}
+                  <input
+                    {...register('title', { required: 'Title is required' })}
                     className="w-full bg-white/5 border border-white/10 text-white rounded-lg px-4 py-3 focus:border-primary focus:outline-none"
                   />
                   {errors.title && <p className="text-red-400 text-xs mt-1">{errors.title.message}</p>}
@@ -179,19 +169,18 @@ const ManagePrograms = () => {
 
                 <div className="md:col-span-2">
                   <label className="block text-sm font-medium text-gray-400 mb-2">Description</label>
-                  <textarea 
-                    {...register("description")}
+                  <textarea
+                    {...register('description')}
                     className="w-full bg-white/5 border border-white/10 text-white rounded-lg px-4 py-3 focus:border-primary focus:outline-none resize-none"
                     rows="3"
                   ></textarea>
                 </div>
 
-                {/* Cover Image Upload (Cloudinary) */}
                 <div className="md:col-span-2">
                   <label className="block text-sm font-medium text-gray-400 mb-2">Cover Banner Image URL *</label>
                   <div className="flex gap-4">
-                    <input 
-                      {...register("coverImage", { required: "Cover image is required" })}
+                    <input
+                      {...register('coverImage', { required: 'Cover image is required' })}
                       className="flex-1 bg-white/5 border border-white/10 text-white rounded-lg px-4 py-3 focus:border-primary focus:outline-none"
                       placeholder="https://..."
                     />
@@ -200,52 +189,29 @@ const ManagePrograms = () => {
                       <input type="file" className="hidden" accept="image/*" onChange={(e) => handleFileUpload(e, 'coverImage')} disabled={isUploading} />
                     </label>
                   </div>
-                  <p className="text-gray-600 text-xs mt-1.5">📐 Recommended: <span className="text-primary/70">1280 × 480 px</span> (landscape, fits new card height) · Max 2MB · JPG or PNG</p>
+                  <p className="text-gray-600 text-xs mt-1.5">Recommended: <span className="text-primary/70">1280 x 480 px</span> (landscape) · Max 2MB · JPG or PNG</p>
                   {coverImageUrl && (
                     <div className="mt-3 h-32 w-full rounded border border-white/10 overflow-hidden relative">
-                      <img src={coverImageUrl} className="w-full h-full object-cover" />
+                      <img src={coverImageUrl} className="w-full h-full object-cover" alt="Cover preview" />
                     </div>
                   )}
                   {errors.coverImage && <p className="text-red-400 text-xs mt-1">{errors.coverImage.message}</p>}
                 </div>
 
-                {/* Logo Image */}
-                <div className="md:col-span-2">
-                  <label className="block text-sm font-medium text-gray-400 mb-2">Program Logo URL</label>
-                  <div className="flex gap-4">
-                    <input 
-                      {...register("logoImage")}
-                      className="flex-1 bg-white/5 border border-white/10 text-white rounded-lg px-4 py-3 focus:border-primary focus:outline-none"
-                      placeholder="https://..."
-                    />
-                    <label className="bg-white/10 hover:bg-white/20 text-white px-4 py-3 rounded-lg cursor-pointer flex items-center gap-2 whitespace-nowrap border border-white/10 transition-colors">
-                      <UploadCloud size={20} /> {isUploading ? '...' : 'Upload'}
-                      <input type="file" className="hidden" accept="image/*" onChange={(e) => handleFileUpload(e, 'logoImage')} disabled={isUploading} />
-                    </label>
-                  </div>
-                  <p className="text-gray-600 text-xs mt-1.5">📐 Recommended: <span className="text-primary/70">200 × 200 px</span> (square) · PNG with transparent background preferred</p>
-                  {logoImageUrl && (
-                    <div className="mt-3 w-20 h-20 rounded border border-white/10 overflow-hidden bg-black flex items-center justify-center p-1">
-                      <img src={logoImageUrl} className="w-full h-full object-contain" />
-                    </div>
-                  )}
-                </div>
-
-                {/* Poster Image (Portrait - for Homepage) */}
                 <div className="md:col-span-2">
                   <label className="block text-sm font-medium text-gray-400 mb-2">Homepage Poster Image <span className="text-primary text-xs font-normal">(Portrait photo shown on homepage)</span></label>
                   <div className="flex gap-4">
-                    <input 
-                      {...register("posterImage")}
+                    <input
+                      {...register('posterImage')}
                       className="flex-1 bg-white/5 border border-white/10 text-white rounded-lg px-4 py-3 focus:border-primary focus:outline-none"
                       placeholder="https://..."
                     />
                     <label className="bg-white/10 hover:bg-white/20 text-white px-4 py-3 rounded-lg cursor-pointer flex items-center gap-2 whitespace-nowrap border border-white/10 transition-colors">
-                      <UploadCloud size={20} /> {isUploading ? '...' : 'Upload'}
+                      <UploadCloud size={20} /> {isUploading ? 'Uploading...' : 'Upload'}
                       <input type="file" className="hidden" accept="image/*" onChange={(e) => handleFileUpload(e, 'posterImage')} disabled={isUploading} />
                     </label>
                   </div>
-                  <p className="text-gray-600 text-xs mt-1.5">📐 Recommended: <span className="text-primary/70">600 × 900 px</span> (portrait 2:3) · Max 2MB · JPG or PNG</p>
+                  <p className="text-gray-600 text-xs mt-1.5">Recommended: <span className="text-primary/70">600 x 900 px</span> (portrait 2:3) · Max 2MB · JPG or PNG</p>
                   {posterImageUrl && (
                     <div className="mt-3 w-32 h-48 rounded-lg border border-white/10 overflow-hidden relative">
                       <img src={posterImageUrl} className="w-full h-full object-cover" alt="Poster Preview" />
@@ -253,11 +219,10 @@ const ManagePrograms = () => {
                   )}
                 </div>
 
-                {/* Is Featured Toggle */}
-                 <div className="md:col-span-2 mt-2">
+                <div className="md:col-span-2 mt-2">
                   <label className="flex items-center gap-3 cursor-pointer">
                     <div className="relative">
-                      <input type="checkbox" {...register("isFeatured")} className="sr-only" />
+                      <input type="checkbox" {...register('isFeatured')} className="sr-only" />
                       <div className="block bg-gray-600 w-10 h-6 rounded-full checkbox-bg transition-colors"></div>
                       <div className="dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform"></div>
                     </div>

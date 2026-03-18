@@ -47,7 +47,7 @@ const getEpisodeByIdOrSlug = async (req, res) => {
 // @access  Private (Admin)
 const createEpisode = async (req, res) => {
   try {
-    const { title, slug, description, program, thumbnailImage, videoUrl, duration, episodeNumber, status, publishDate } = req.body;
+    const { title, slug, description, program, thumbnailImage, videoUrl, status, publishDate } = req.body;
 
     const programExists = await Program.findById(program);
     if (!programExists) {
@@ -76,8 +76,6 @@ const createEpisode = async (req, res) => {
       program,
       thumbnailImage,
       videoUrl,
-      duration,
-      episodeNumber,
       status,
       publishDate,
     });
@@ -94,7 +92,7 @@ const createEpisode = async (req, res) => {
 // @access  Private (Admin)
 const updateEpisode = async (req, res) => {
   try {
-    const { title, slug, description, program, thumbnailImage, videoUrl, duration, episodeNumber, status, publishDate } = req.body;
+    const { title, slug, description, program, thumbnailImage, videoUrl, status, publishDate } = req.body;
 
     const episode = await Episode.findById(req.params.id);
 
@@ -105,8 +103,6 @@ const updateEpisode = async (req, res) => {
       episode.program = program || episode.program;
       episode.thumbnailImage = thumbnailImage || episode.thumbnailImage;
       episode.videoUrl = videoUrl || episode.videoUrl;
-      episode.duration = duration !== undefined ? duration : episode.duration;
-      episode.episodeNumber = episodeNumber !== undefined ? episodeNumber : episode.episodeNumber;
       episode.status = status || episode.status;
       episode.publishDate = publishDate || episode.publishDate;
 

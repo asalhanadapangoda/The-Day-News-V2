@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../services/api';
-import { PlayCircle, ArrowRight, Calendar, Clock } from 'lucide-react';
+import { PlayCircle, ArrowRight, Calendar } from 'lucide-react';
 import { format } from 'date-fns';
 import AIChatBot from '../components/AIChatBot';
 import Skeleton from '../components/Skeleton';
@@ -253,9 +253,6 @@ const Home = () => {
                 <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors flex items-center justify-center">
                   <PlayCircle size={48} className="text-white/80 group-hover:text-white transform group-hover:scale-110 transition-all drop-shadow-lg" />
                 </div>
-                <div className="absolute bottom-3 right-3 bg-black/80 px-2 py-1 rounded text-xs text-white font-mono flex items-center gap-1">
-                  <Clock size={12} /> {episode.duration || '00:00'}
-                </div>
               </div>
               <div className="p-5">
                 <div className="text-primary text-xs font-bold uppercase tracking-wider mb-2">{episode.program?.title}</div>
@@ -335,11 +332,6 @@ const Home = () => {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity"></div>
                   <div className="absolute bottom-0 left-0 right-0 p-6">
-                    {prog.logoImage && (
-                      <div className="w-14 h-14 bg-white/10 backdrop-blur-md rounded-xl p-2 border border-white/20 mb-4 group-hover:scale-110 transition-transform">
-                        <img src={prog.logoImage} className="w-full h-full object-contain" alt={prog.title + ' logo'} />
-                      </div>
-                    )}
                     <h3 className="text-white font-black text-xl md:text-2xl leading-tight drop-shadow-lg group-hover:text-primary transition-colors">
                       {prog.title}
                     </h3>
@@ -385,11 +377,6 @@ const Home = () => {
                 {/* Program header */}
                 <div className="flex justify-between items-center mb-6 pb-3 border-b border-white/10">
                   <div className="flex items-center gap-3">
-                    {prog.logoImage && (
-                      <div className="w-10 h-10 bg-black/50 rounded-lg p-1 border border-white/10 flex-shrink-0">
-                        <img src={prog.logoImage} className="w-full h-full object-contain" alt={prog.title} />
-                      </div>
-                    )}
                     <h2 className="text-xl md:text-2xl font-bold text-white">{prog.title}</h2>
                   </div>
                   <Link
@@ -412,11 +399,6 @@ const Home = () => {
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                             loading="lazy"
                           />
-                        {episode.episodeNumber && (
-                          <div className="absolute top-3 left-3 bg-primary text-white text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-full shadow">
-                            EPISODE {episode.episodeNumber}
-                          </div>
-                        )}
                         <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors flex items-center justify-center">
                           <PlayCircle size={44} className="text-white/70 group-hover:text-white group-hover:scale-110 transition-all drop-shadow-lg" />
                         </div>

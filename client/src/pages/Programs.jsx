@@ -67,19 +67,12 @@ const Programs = () => {
             
             {/* Content Overlay */}
             <div className="absolute inset-0 p-6 flex flex-col justify-end">
-              <div className="flex items-center gap-4">
-                {program.logoImage && (
-                  <div className="w-12 h-12 bg-white/10 backdrop-blur-md rounded-lg p-1.5 border border-white/20 flex-shrink-0 group-hover:scale-110 transition-transform">
-                    <img src={program.logoImage} alt="" className="w-full h-full object-contain" />
-                  </div>
-                )}
-                <div>
-                  <h2 className="text-xl md:text-2xl font-black text-white group-hover:text-primary transition-colors leading-tight drop-shadow-lg">
-                    {program.title}
-                  </h2>
-                  <div className="flex items-center gap-2 text-primary font-bold text-[10px] uppercase tracking-[0.2em] mt-1 opacity-0 group-hover:opacity-100 transition-all transform translate-y-2 group-hover:translate-y-0">
-                    <PlayCircle size={14} /> View Episodes
-                  </div>
+              <div>
+                <h2 className="text-xl md:text-2xl font-black text-white group-hover:text-primary transition-colors leading-tight drop-shadow-lg">
+                  {program.title}
+                </h2>
+                <div className="flex items-center gap-2 text-primary font-bold text-[10px] uppercase tracking-[0.2em] mt-1 opacity-0 group-hover:opacity-100 transition-all transform translate-y-2 group-hover:translate-y-0">
+                  <PlayCircle size={14} /> View Episodes
                 </div>
               </div>
             </div>

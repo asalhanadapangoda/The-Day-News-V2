@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import api from '../services/api';
-import { PlayCircle, Clock, Calendar, X } from 'lucide-react';
+import { PlayCircle, Calendar, X } from 'lucide-react';
 import { format } from 'date-fns';
 
 const ProgramDetail = () => {
@@ -73,11 +73,6 @@ const ProgramDetail = () => {
         <img src={program.coverImage} className="absolute inset-0 w-full h-full object-cover" alt={program.title} />
         <div className="absolute inset-0 bg-gradient-to-t from-[#0c0014] via-[#0c0014]/60 to-black/30"></div>
         <div className="absolute bottom-0 left-0 w-full p-8 max-w-7xl mx-auto flex items-end gap-6">
-          {program.logoImage && (
-            <div className="w-24 h-24 bg-white/5 backdrop-blur rounded shadow-xl p-2 hidden md:block border border-white/20">
-              <img src={program.logoImage} className="w-full h-full object-contain" alt="Logo" />
-            </div>
-          )}
           <div className="pb-4">
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-2">{program.title}</h1>
             <p className="text-gray-300 max-w-3xl text-lg">{program.description}</p>
@@ -105,11 +100,6 @@ const ProgramDetail = () => {
                   <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 flex items-center justify-center transition-colors">
                     <PlayCircle size={48} className="text-white drop-shadow-lg group-hover:scale-110 transition-transform" />
                   </div>
-                  {episode.duration && (
-                    <div className="absolute bottom-3 right-3 bg-black/80 px-2 py-1 rounded text-[10px] text-white font-mono border border-white/10">
-                      {episode.duration}
-                    </div>
-                  )}
                 </div>
                 <div className="p-5 flex flex-col flex-grow">
                   <h4 className="text-lg font-bold text-white mb-2 line-clamp-2 group-hover:text-primary transition-colors">{episode.title}</h4>

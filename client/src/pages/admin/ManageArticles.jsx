@@ -13,7 +13,7 @@ const ManageArticles = () => {
   const [editingId, setEditingId] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isUploading, setIsUploading] = useState(false);
-  
+
   // React Quill Content State
   const [editorContent, setEditorContent] = useState('');
 
@@ -22,7 +22,7 @@ const ManageArticles = () => {
   const [searchQuery, setSearchQuery] = useState('');
 
   const { register, handleSubmit, reset, setValue, watch, formState: { errors } } = useForm();
-  
+
   const featuredImageUrl = watch('featuredImage');
 
   const fetchData = async () => {
@@ -46,13 +46,13 @@ const ManageArticles = () => {
 
   const openAddModal = () => {
     setEditingId(null);
-    reset({ 
-      title: '', 
-      excerpt: '', 
-      featuredImage: '', 
-      author: 'Admin', 
+    reset({
+      title: '',
+      excerpt: '',
+      featuredImage: '',
+      author: 'Admin',
       tags: '',
-      category: filterCategory || (categories.length > 0 ? categories[0]._id : '') 
+      category: filterCategory || (categories.length > 0 ? categories[0]._id : '')
     });
     setEditorContent('');
     setIsModalOpen(true);
@@ -60,10 +60,10 @@ const ManageArticles = () => {
 
   const openEditModal = (art) => {
     setEditingId(art._id);
-    reset({ 
-      title: art.title, 
-      excerpt: art.excerpt, 
-      featuredImage: art.featuredImage, 
+    reset({
+      title: art.title,
+      excerpt: art.excerpt,
+      featuredImage: art.featuredImage,
       author: art.author,
       tags: art.tags ? art.tags.join(', ') : '',
       category: art.category?._id || ''
@@ -101,8 +101,8 @@ const ManageArticles = () => {
 
   const onSubmit = async (data) => {
     if (!editorContent || editorContent === '<p><br></p>') {
-       alert("Article content cannot be empty.");
-       return;
+      alert("Article content cannot be empty.");
+      return;
     }
 
     const formattedData = {
@@ -168,8 +168,8 @@ const ManageArticles = () => {
       {/* Toolbar */}
       <div className="bg-[#121212] border border-white/5 rounded-xl p-4 mb-6 flex flex-col md:flex-row gap-4 justify-between">
         <div className="flex flex-col md:flex-row gap-4 w-full md:w-auto">
-          <select 
-            value={filterCategory} 
+          <select
+            value={filterCategory}
             onChange={(e) => setFilterCategory(e.target.value)}
             className="bg-[#1a1a1a] border border-white/10 text-white text-sm rounded-lg px-4 py-2 focus:outline-none focus:border-primary [&>option]:bg-[#1a1a1a]"
           >
@@ -179,9 +179,9 @@ const ManageArticles = () => {
             ))}
           </select>
         </div>
-        
+
         <div className="relative w-full md:w-64">
-          <input 
+          <input
             type="text"
             placeholder="Search titles..."
             value={searchQuery}
@@ -213,7 +213,7 @@ const ManageArticles = () => {
                 <td className="px-6 py-4 text-white font-medium max-w-[250px] truncate" title={art.title}>{art.title}</td>
                 <td className="px-6 py-4 text-gray-400 text-sm">
                   {art.category ? (
-                   <span className="bg-white/10 px-2 py-1 rounded text-xs">{art.category.name}</span>
+                    <span className="bg-white/10 px-2 py-1 rounded text-xs">{art.category.name}</span>
                   ) : 'Uncategorized'}
                 </td>
                 <td className="px-6 py-4 text-gray-400 text-sm truncate max-w-[100px]">{art.author}</td>
@@ -243,21 +243,21 @@ const ManageArticles = () => {
       {/* Editor Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex justify-center items-center p-4">
-           {/* Custom width for rich text editor to have space */}
+          {/* Custom width for rich text editor to have space */}
           <div className="bg-[#1a1a1a] border border-white/10 w-full max-w-5xl rounded-2xl shadow-2xl relative overflow-hidden flex flex-col h-[90vh]">
             <div className="flex justify-between items-center p-6 border-b border-white/10 bg-[#121212] flex-shrink-0">
               <h2 className="text-xl font-bold text-white">{editingId ? 'Edit Article' : 'Write Article'}</h2>
               <button onClick={closeModal} className="text-gray-400 hover:text-white transition-colors"><X size={24} /></button>
             </div>
-            
+
             <form onSubmit={handleSubmit(onSubmit)} className="overflow-y-auto flex-grow flex flex-col">
               <div className="p-6 grid grid-cols-1 lg:grid-cols-3 gap-8">
-                
+
                 {/* Left Side: Meta fields */}
                 <div className="lg:col-span-1 space-y-6">
                   <div>
                     <label className="block text-sm font-medium text-gray-400 mb-2">Category *</label>
-                    <select 
+                    <select
                       {...register("category", { required: "Category is required" })}
                       className="w-full bg-white/5 border border-white/10 text-white rounded-lg px-4 py-3 focus:border-primary focus:outline-none [&>option]:bg-[#1a1a1a]"
                     >
@@ -269,7 +269,7 @@ const ManageArticles = () => {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-400 mb-2">Author</label>
-                    <input 
+                    <input
                       {...register("author")}
                       className="w-full bg-white/5 border border-white/10 text-white rounded-lg px-4 py-3 focus:border-primary focus:outline-none"
                     />
@@ -278,7 +278,7 @@ const ManageArticles = () => {
                   <div>
                     <label className="block text-sm font-medium text-gray-400 mb-2">Featured Image URL *</label>
                     <div className="flex gap-2">
-                      <input 
+                      <input
                         {...register("featuredImage", { required: "Image is required" })}
                         className="flex-1 bg-white/5 border border-white/10 text-white rounded-lg px-3 py-2 text-sm focus:border-primary focus:outline-none"
                         placeholder="https://..."
@@ -299,7 +299,7 @@ const ManageArticles = () => {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-400 mb-2">Tags (Comma separated)</label>
-                    <input 
+                    <input
                       {...register("tags")}
                       placeholder="news, global, politics"
                       className="w-full bg-white/5 border border-white/10 text-white rounded-lg px-4 py-3 focus:border-primary focus:outline-none"
@@ -311,7 +311,7 @@ const ManageArticles = () => {
                 <div className="lg:col-span-2 space-y-6 flex flex-col h-full">
                   <div>
                     <label className="block text-sm font-medium text-gray-400 mb-2">Article Title *</label>
-                    <input 
+                    <input
                       {...register("title", { required: "Title is required" })}
                       className="w-full bg-white/5 text-xl font-bold border border-white/10 text-white rounded-lg px-4 py-3 focus:border-primary focus:outline-none"
                       placeholder="Enter a compelling headline"
@@ -321,7 +321,7 @@ const ManageArticles = () => {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-400 mb-2">Excerpt summary</label>
-                    <textarea 
+                    <textarea
                       {...register("excerpt")}
                       className="w-full bg-white/5 border border-white/10 text-white rounded-lg px-4 py-3 focus:border-primary focus:outline-none resize-none"
                       rows="2"
@@ -333,10 +333,10 @@ const ManageArticles = () => {
                   <div className="flex-grow flex flex-col pb-4 h-[400px]">
                     <label className="block text-sm font-medium text-gray-400 mb-2">Article Body Content *</label>
                     <div className="bg-white text-black rounded-lg overflow-hidden flex-grow flex flex-col h-full editor-container">
-                      <ReactQuill 
-                        theme="snow" 
-                        value={editorContent} 
-                        onChange={setEditorContent} 
+                      <ReactQuill
+                        theme="snow"
+                        value={editorContent}
+                        onChange={setEditorContent}
                         modules={modules}
                         className="flex-grow flex flex-col h-full pb-10"
                       />

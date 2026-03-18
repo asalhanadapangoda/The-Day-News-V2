@@ -26,12 +26,6 @@ const episodeSchema = new mongoose.Schema(
       type: String,
       required: true, // This can be an external embed link like YouTube
     },
-    duration: {
-      type: String, // e.g., '24:00'
-    },
-    episodeNumber: {
-      type: Number,
-    },
     status: {
       type: String,
       enum: ['draft', 'published'],
