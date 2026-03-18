@@ -1,0 +1,45 @@
+﻿[dotenv@17.3.1] injecting env (12) from .env -- tip: ΓÜÖ∩╕Å  enable debug logging with { debug: true }
+[dotenv@17.3.1] injecting env (0) from .env -- tip: ≡ƒöÉ prevent building .env in docker: https://dotenvx.com/prebuild
+node : file:///C:/Users
+/User/Desktop/The-Day-N
+ews-V2/server/server.js
+:27
+At line:1 char:1
++ node server.js 2>&1 
+| Out-File -Encoding 
+utf8 out2.txt
++ ~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo     
+         : NotSpecifi  
+  ed: (file:///C:/Us   
+ er...er/server.js:    
+27:String) [], Rem    
+oteException
+    + FullyQualifiedEr 
+   rorId : NativeComm  
+  andError
+ 
+app.use(cookieParser())
+;
+        ^
+
+TypeError: 
+cookieParser is not a 
+function
+    at file:///C:/Users
+/User/Desktop/The-Day-N
+ews-V2/server/server.js
+:27:9
+    at ModuleJob.run (n
+ode:internal/modules/es
+m/module_job:343:25)
+    at async onImport.t
+racePromise.__proto__ (
+node:internal/modules/e
+sm/loader:665:26)
+    at async asyncRunEn
+tryPointWithESMLoader (
+node:internal/modules/r
+un_main:117:5)
+
+Node.js v22.21.1

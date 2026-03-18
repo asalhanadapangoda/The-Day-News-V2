@@ -1,1 +1,66 @@
 @import "tailwindcss";
+@import "react-quill/dist/quill.snow.css"; /* For rich text editor */
+
+@theme {
+  --color-primary: #6A1BB9;
+  --color-primary-hover: #551594;
+  --color-dark-surface: #1A1A1A;
+  --color-dark-card: #242424;
+  --color-dark-purple: #2E004F;
+  --color-text-primary: #FFFFFF;
+  --color-text-secondary: #B3B3B3;
+  --color-border-subtle: #333333;
+}
+
+/* Custom base styles for dark media platform */
+@layer base {
+  body {
+    @apply bg-gradient-to-br from-[#0c0014] to-[#121212] text-text-primary font-sans antialiased min-h-screen selection:bg-primary selection:text-white;
+  }
+}
+
+/* Custom utilities */
+@layer utilities {
+  .text-glow {
+    text-shadow: 0 0 10px rgba(106, 27, 185, 0.5);
+  }
+  
+  .glass-card {
+    @apply bg-dark-card/80 backdrop-blur-md border border-white/5 rounded-xl shadow-xl transition-all duration-300;
+  }
+
+  .hover-glow {
+    @apply hover:shadow-[0_0_15px_rgba(106,27,185,0.4)] transition-shadow duration-300;
+  }
+
+  /* Admin Sidebar layout specific */
+  .admin-sidebar {
+    @apply bg-dark-purple text-text-primary border-r border-white/5;
+  }
+
+  /* Global Select styling for visibility */
+  select option {
+    @apply bg-[#1a1a1a] text-white;
+  }
+}
+
+/* Overriding React Quill styles to match dark theme */
+.ql-toolbar {
+  @apply !bg-dark-card !border-border-subtle !rounded-t-lg;
+}
+.ql-container {
+  @apply !bg-dark-surface !border-border-subtle !rounded-b-lg !text-white !font-sans !text-base;
+  min-height: 200px;
+}
+.ql-stroke {
+  @apply !stroke-white;
+}
+.ql-fill {
+  @apply !fill-white;
+}
+.ql-picker-label {
+  @apply !text-white;
+}
+.ql-picker-options {
+  @apply !bg-dark-card !border-border-subtle;
+}
