@@ -1,7 +1,12 @@
 import axios from 'axios';
 
+const configuredApiUrl = import.meta.env.VITE_API_URL?.trim();
+const baseURL = configuredApiUrl
+  ? configuredApiUrl.replace(/\/+$/, '')
+  : '/api';
+
 const api = axios.create({
-  baseURL: '/api', // Because we use Vite proxy in dev, and relative in prod
+  baseURL,
 });
 
 // Request interceptor to add the auth token to headers

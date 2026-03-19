@@ -53,8 +53,12 @@ const Home = () => {
         ]);
 
         const settings = settingsRes.data;
-        const allEpisodes = episodesRes.data;
-        const allPrograms = programsRes.data;
+        const allEpisodes = Array.isArray(episodesRes.data) ? episodesRes.data : [];
+        const allPrograms = Array.isArray(programsRes.data) ? programsRes.data : [];
+        const articles = Array.isArray(articlesRes.data) ? articlesRes.data : [];
+        const categories = Array.isArray(categoriesRes.data) ? categoriesRes.data : [];
+        const ads = Array.isArray(adsRes.data) ? adsRes.data : [];
+        const heroes = Array.isArray(heroesRes.data) ? heroesRes.data : [];
 
         // Extract featured program info
         const featuredProgram = allPrograms.find(p => p.isFeatured) || allPrograms[0];
@@ -65,12 +69,12 @@ const Home = () => {
         setData({
           settings,
           recentEpisodes: allEpisodes.slice(0, 3), // Get latest 3 overall
-          recentArticles: articlesRes.data.slice(0, 4), // Get latest 4 articles
-          categories: categoriesRes.data,
+          recentArticles: articles.slice(0, 4), // Get latest 4 articles
+          categories,
           featuredProgram,
           featuredEpisodes,
-          ads: adsRes.data,
-          heroes: heroesRes.data,
+          ads,
+          heroes,
           allPrograms,
           allEpisodes,
         });
