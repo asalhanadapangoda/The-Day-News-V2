@@ -98,7 +98,6 @@ const About = () => {
                         className="inline-flex items-center gap-2 mt-5 text-gray-400 hover:text-[#0077B5] transition-colors text-sm font-medium"
                       >
                         <Linkedin size={17} />
-                        LinkedIn Profile
                       </a>
                     )}
                   </div>

@@ -36,16 +36,16 @@ const Contact = () => {
     try {
       setSubmitStatus({ state: 'loading', message: '' });
       await api.post('/messages', data);
-      
+
       setSubmitStatus({ state: 'success', message: 'Thank you! Your message has been sent successfully.' });
       reset();
-      
+
       // Clear success message after 5 seconds
       setTimeout(() => setSubmitStatus({ state: 'idle', message: '' }), 5000);
     } catch (error) {
-      setSubmitStatus({ 
-        state: 'error', 
-        message: error.response?.data?.message || 'Something went wrong. Please try again later.' 
+      setSubmitStatus({
+        state: 'error',
+        message: error.response?.data?.message || 'Something went wrong. Please try again later.'
       });
     }
   };
@@ -62,7 +62,7 @@ const Contact = () => {
 
       <div className="max-w-7xl mx-auto px-4 py-16">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          
+
           {/* Contact Info container */}
           <div>
             <h2 className="text-3xl font-bold text-white mb-8">Get In Touch</h2>
@@ -76,8 +76,12 @@ const Contact = () => {
                   <MapPin className="text-primary" size={24} />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-white mb-2">Our Headquarters</h3>
-                  <p className="text-gray-400">{settings?.contactAddress || '123 Media Avenue, New York, NY 10001, USA'}</p>
+                  <h3 className="text-xl font-bold text-white mb-2">Our Lobby Office</h3>
+                  <p className="text-gray-400">{settings?.contactAddress || 'Trace Expert City, Bay 09, Colombo 10, Sri Lanka'}</p>
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-white mb-2">Our Content Studio</h3>
+                  <p className="text-gray-400">Hacker House, Pannipitiya Rd, Battaramulla</p>
                 </div>
               </div>
 
@@ -106,13 +110,13 @@ const Contact = () => {
           {/* Contact Form */}
           <div className="glass-card p-8 md:p-10">
             <h3 className="text-2xl font-bold text-white mb-6">Send a Message</h3>
-            
+
             {submitStatus.state === 'success' && (
               <div className="mb-6 p-4 bg-green-500/20 border border-green-500 rounded text-green-300">
                 {submitStatus.message}
               </div>
             )}
-            
+
             {submitStatus.state === 'error' && (
               <div className="mb-6 p-4 bg-red-500/20 border border-red-500 rounded text-red-300">
                 {submitStatus.message}
@@ -123,9 +127,9 @@ const Contact = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-400 mb-2">Your Name</label>
-                  <input 
+                  <input
                     {...register("name")}
-                    type="text" 
+                    type="text"
                     className="w-full bg-white/5 border border-white/10 text-white rounded-lg px-4 py-3 focus:outline-none focus:border-primary transition-colors"
                     placeholder="John Doe"
                   />
@@ -133,9 +137,9 @@ const Contact = () => {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-400 mb-2">Email Address</label>
-                  <input 
+                  <input
                     {...register("email")}
-                    type="email" 
+                    type="email"
                     className="w-full bg-white/5 border border-white/10 text-white rounded-lg px-4 py-3 focus:outline-none focus:border-primary transition-colors"
                     placeholder="john@example.com"
                   />
@@ -145,9 +149,9 @@ const Contact = () => {
 
               <div>
                 <label className="block text-sm font-medium text-gray-400 mb-2">Subject</label>
-                <input 
+                <input
                   {...register("subject")}
-                  type="text" 
+                  type="text"
                   className="w-full bg-white/5 border border-white/10 text-white rounded-lg px-4 py-3 focus:outline-none focus:border-primary transition-colors"
                   placeholder="How can we help you?"
                 />
@@ -156,7 +160,7 @@ const Contact = () => {
 
               <div>
                 <label className="block text-sm font-medium text-gray-400 mb-2">Message</label>
-                <textarea 
+                <textarea
                   {...register("message")}
                   rows="6"
                   className="w-full bg-white/5 border border-white/10 text-white rounded-lg px-4 py-3 focus:outline-none focus:border-primary transition-colors resize-none"
@@ -165,8 +169,8 @@ const Contact = () => {
                 {errors.message && <p className="text-red-400 text-xs mt-1">{errors.message.message}</p>}
               </div>
 
-              <button 
-                type="submit" 
+              <button
+                type="submit"
                 disabled={submitStatus.state === 'loading'}
                 className="w-full flex items-center justify-center gap-2 bg-primary hover:bg-primary-hover text-white font-bold py-4 rounded-lg transition-colors disabled:opacity-50"
               >
